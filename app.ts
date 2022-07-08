@@ -111,11 +111,13 @@ class Main {
         this.boardContainer = document.createElement('div')
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
-        // Board area upper aka. User display:
-        // TODO: 08/07/2022 subsume UserDisplay into board? ie. Just have status bar and reset button? 
+        /*
+        Board area upper aka. User display:
+        08/07/2022 subsume UserDisplay into board? ie. Just have status bar and reset button? 
         const userDisplayElement = document.createElement('div')
         userDisplayElement.classList.add('user-display')
         userDisplayElement.innerText = 'User Display Area'
+        */
         // Button:
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
@@ -127,15 +129,20 @@ class Main {
             this.resetGame()
         })
         // 08/07/2022 trying text area in user display:
-        const statusBar = document.createElement('text')
+        const statusBar = document.createElement('div')
         statusBar.classList.add('status-bar')
-        statusBar.innerText = 'Status: '
+        // 08/07/2022: putting text as child w/in status bar
+        const statusText = document.createElement('text')
+        statusText.classList.add('status-text')
+        statusText.innerText = 'Status:'
+
         // 08/07/2022 Delete this line if not placing reset button in userdisplay.
         //userDisplayElement.appendChild(resetButton)
         //userDisplayElement.appendChild(statusBar)
         //this.boardContainer.appendChild(userDisplayElement)
         
         // 08/07/2022 USE this to place button below Userdisplay section:
+        statusBar.appendChild(statusText)
         this.boardContainer.appendChild(statusBar)
         this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
