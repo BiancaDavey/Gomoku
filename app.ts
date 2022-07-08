@@ -20,12 +20,18 @@ class Square {
             this.handleClick()
         })
     }
+
+    /* 
+    TODO: update handle click function to change square selected colour alternatively, from square-selected-1; square-selected-2
+    ie. selected1=black, selected2=white. ENUM? STATUS = SELECTED1 SELECTED2?
+    */
     handleClick() {
         if (this.status === STATUS.OCCUPIED) return
         this.element.classList.remove(this.status.toLowerCase())
         this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
         this.element.classList.add(this.status.toLowerCase())
     }
+
     get isSelected() {
         return this.status === STATUS.SELECTED
     }
@@ -90,9 +96,14 @@ class Main {
         this.boardContainer.classList.add('board')
         // Board area upper aka. User display:
         const userDisplayElement = document.createElement('div')
-        userDisplayElement.classList.add('userDisplay')
+        userDisplayElement.classList.add('user-display')
         userDisplayElement.innerText = 'User Display Area'
+        // Button:
+        const resetButton = document.createElement('button')
+        resetButton.classList.add('reset-button')
+        resetButton.innerText = 'Reset'
         this.boardContainer.appendChild(userDisplayElement)
+        this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
     }
 
