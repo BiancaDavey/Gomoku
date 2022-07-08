@@ -102,6 +102,12 @@ class Main {
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
         resetButton.innerText = 'Reset'
+        // Event handler for clicking on reset button:
+        resetButton.addEventListener('click', () => {
+            console.log("Resetting game.")
+            // Reset game function call.
+            this.resetGame()
+        })
         this.boardContainer.appendChild(userDisplayElement)
         this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
@@ -113,6 +119,11 @@ class Main {
         }
         this.gridMap = new GridMap(rowNumber, squareNumberPerRow, occupiedSquares)
         this.boardContainer.append(this.gridMap.element)
+    }
+
+    // Reset game
+    resetGame(){
+        this.renderGame(10, 10)
     }
 }
 
