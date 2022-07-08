@@ -1,13 +1,10 @@
-import { textChangeRangeIsUnchanged } from "typescript"
+// import { textChangeRangeIsUnchanged } from "typescript"
 
 enum STATUS {
     FREE = 'FREE',
     OCCUPIED = 'OCCUPIED',
     SELECTED = 'SELECTED',  
 }
-
-// Render game area. Main/"Class1" has > Class2, has screen (board area upper) and stone-map
-//                  Main                   Board            has UserDisplay          Grid Map
 
 class Square {
     id: number
