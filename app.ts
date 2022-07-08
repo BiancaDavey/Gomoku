@@ -30,16 +30,25 @@ class Square {
     /* 
     TODO: update handle click function to change square selected colour alternatively, from square-selected-1; square-selected-2
     ie. selected1=black, selected2=white. ENUM? STATUS = SELECTED1 SELECTED2?
+    TODO: use status OCCUPIED? > status occupiedone, occupiedtwo?
+    TODO: remove status occupied. not needed? unless reuse as alt to selected, for colours.
     */
     handleClick() {
-        if (this.status === STATUS.OCCUPIED) return
+        if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED) return
         this.element.classList.remove(this.status.toLowerCase())
+        // TODO: alternate clicks setting status as occupied or selected.
         this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
         this.element.classList.add(this.status.toLowerCase())
     }
 
+    // Method to return click turn?
+
     get isSelected() {
         return this.status === STATUS.SELECTED
+    }
+
+    get isOccupied() {
+        return this.status === STATUS.OCCUPIED
     }
 }
 
@@ -59,6 +68,7 @@ class Row {
         this.element.append(...this.squares.map((square) => square.element))
     }
 
+    // Return occupied squares?
     get selectedSquaresId() {
         return this.squares.filter((square) => square.isSelected).map((square) => square.id)
     }
@@ -66,6 +76,7 @@ class Row {
 
 class GridMap {
     rows: Row[]
+    // Return occupied squares?
     selectedSquares: number[]  = []
     element: HTMLDivElement
 
