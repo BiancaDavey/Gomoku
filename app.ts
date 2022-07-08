@@ -6,6 +6,12 @@ enum STATUS {
     SELECTED = 'SELECTED',  
 }
 
+// enum for turn? OR a counter to track? odd/even
+enum TURN {
+    ONE = 'ONE',
+    TWO = 'TWO',
+}
+
 class Square {
     id: number
     status: STATUS
@@ -95,6 +101,7 @@ class Main {
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
         // Board area upper aka. User display:
+        // TODO: 08/07/2022 subsume UserDisplay into board? ie. Just have status bar and reset button? 
         const userDisplayElement = document.createElement('div')
         userDisplayElement.classList.add('user-display')
         userDisplayElement.innerText = 'User Display Area'
@@ -108,7 +115,17 @@ class Main {
             // Reset game function call.
             this.resetGame()
         })
-        this.boardContainer.appendChild(userDisplayElement)
+        // 08/07/2022 trying text area in user display:
+        const statusBar = document.createElement('text')
+        statusBar.classList.add('status-bar')
+        statusBar.innerText = 'Status: '
+        // 08/07/2022 Delete this line if not placing reset button in userdisplay.
+        //userDisplayElement.appendChild(resetButton)
+        //userDisplayElement.appendChild(statusBar)
+        //this.boardContainer.appendChild(userDisplayElement)
+        
+        // 08/07/2022 USE this to place button below Userdisplay section:
+        this.boardContainer.appendChild(statusBar)
         this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
     }
