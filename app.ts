@@ -13,7 +13,7 @@ TODO 09/07/2022 ADD SELECTEDTWO:
 
 */
 
-import { nodeModuleNameResolver } from "typescript"
+// import { nodeModuleNameResolver } from "typescript"
 
 enum STATUS {
     FREE = 'FREE',
@@ -31,7 +31,7 @@ enum TURN {
 
 // OR a boolean?
 
-class Square {
+export class Square {
     id: number
     status: STATUS
     element: HTMLDivElement
@@ -84,7 +84,7 @@ class Square {
     */
 }
 
-class Row {
+export class Row {
     id: number
     squares: Square[]
     element: HTMLDivElement
@@ -110,7 +110,7 @@ class Row {
     }
 }
 
-class GridMap {
+export class GridMap {
     rows: Row[]
     // Return occupied squares?
     selectedSquares: number[]  = []
@@ -178,6 +178,7 @@ class GridMap {
             let first: number = numbers[0]
             let last: number = numbers[4]
             console.log('Game Over.')
+            main.resetGame()
             //if ((numbers[0] + 4) == numbers[4]){
             //    console.log('Winner. Game Over. 5 in a row.')
             //}
@@ -218,7 +219,7 @@ type Board = {
     occupiedSquares?: number[]
 }
 
-class Main {
+export class Main {
     gridMap: GridMap | null = null
     boardContainer: HTMLDivElement
 
