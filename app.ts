@@ -2,14 +2,18 @@
 
 TODO 09/07/2022 ADD SELECTEDTWO:
 
-* 1. "Selected" add additional STATUS SELECTEDTWO.
+* 1. X "Selected" add additional STATUS SELECTEDTWO.
 * 2. SelectedTwo implemented every second click.
-* 3. Styling colour pink for SELECTEDTWO.
+* 3. X Styling colour pink for SELECTEDTWO.
 * 4. Return selected and selectedTwo.
-* // Remove Occupied? Or at least comment it all out; as not needed I think.
-* Check if five in a row (record array? Map based on config? ie. number of rows/cols?)
+* 5. Remove Occupied? Or at least comment it all out; as not needed I think.
+* 6. X Check if five in a row horizontally (record array? Map based on config? ie. number of rows/cols?)
+* 7. Check if five in a row vertically
+* 8. Reset upon five in a row
 
 */
+
+import { nodeModuleNameResolver } from "typescript"
 
 enum STATUS {
     FREE = 'FREE',
@@ -147,29 +151,42 @@ class GridMap {
         console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
     }
 
-    // TODO: method to check array for 5 in a row?
     checkWinner() {
         let countHorizontal: number = 0;
+        let numbers: number[] = []        
         let countVertical: number = 0;
-        //var count = 0;
-        // take parameter for array, or this.selectedSquares?
+        // TODO: HAVE TO RESTRICT. IT'S COUNTING TWO SETS OF 3'S. As in, condition: [i]+5=[i+5]
         for (var i = 0; i < this.selectedSquares.length-1; i++){
-            if ((this.selectedSquares[i+1]) === ((this.selectedSquares[i]) +1)){
-                countHorizontal++;
+            if (((this.selectedSquares[i+1]) === ((this.selectedSquares[i]) +1))){
+                countHorizontal++
+                // TODO whenever numbers length >=4, check for sequential.
+                numbers.push(this.selectedSquares[i])
+                // Testing; delete when not needed.
+                console.log(numbers)
+                console.log(countHorizontal)
             }
+            else {
+                countHorizontal = 0
+            }
+            /*else if ((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) +10)){
+                countVertical++;
+            }
+            */
         }
 
         if (countHorizontal == 4){
-            console.log('Winner. Game Over. 5 in a row horizontal.')
-            // Reset game.   
+            let first: number = numbers[0]
+            let last: number = numbers[4]
+            console.log('Game Over.')
+            //if ((numbers[0] + 4) == numbers[4]){
+            //    console.log('Winner. Game Over. 5 in a row.')
+            //}
+            // Game over function. reset game.
         }
-
-        // Also need to check vertically. need squareNumberPerRow (for column number).
-        // == selectedSquares[i]+squareNumberPerRow === selectedSquares[i+squareNumberPerRow] +1
-        // eg. [1]+10 === [1+10] 
-        //      ie. 11  === [11]. Yeah, that's it.
+/*
         for (var i = 0; i < this.selectedSquares.length-1; i++){
-            if(((this.selectedSquares[i]) +10) === (this.selectedSquares[i+10])){
+            // if(((this.selectedSquares[i]) +10) === (this.selectedSquares[i+10])){
+            if ((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) +10)){
                 countVertical++;
             }
         }
@@ -177,6 +194,12 @@ class GridMap {
             console.log('Winner. Game Over. 5 in a row vertical.')
             // Reset game
         }
+        */
+
+        // Also need to check vertically. need squareNumberPerRow (for column number).
+        // == selectedSquares[i]+squareNumberPerRow === selectedSquares[i+squareNumberPerRow] +1
+        // eg. [1]+10 === [1+10] 
+        //      ie. 11  === [11]. Yeah, that's it.
 
     }
 
@@ -241,4 +264,4 @@ class Main {
 // Initialise app with main object.
 const main = new Main()
 // Specify number of rows and number of squares per row.
-main.renderGame(10, 10, [3,4])
+main.renderGame(10, 10)
