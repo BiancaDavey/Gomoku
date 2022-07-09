@@ -139,6 +139,7 @@ export class GridMap {
             this.getSelectedTwoSquaresId()
         })
     }
+
     getSelectedSquaresId(){
         this.selectedSquares = this.rows.map(row => row.selectedSquaresId).flat()
         console.log(`selected squares: ${this.selectedSquares.join(',')}`)
@@ -152,38 +153,67 @@ export class GridMap {
     }
 
     checkWinner() {
-        let countHorizontal: number = 0;
-        let numbers: number[] = []        
-        let countVertical: number = 0;
-        // TODO: HAVE TO RESTRICT. IT'S COUNTING TWO SETS OF 3'S. As in, condition: [i]+5=[i+5]
+        let countHorizontal: number = 1;
+        // let numbers: number[] = []  
+        //let numbersVertical: number[] = []      
+        //let countVertical: number = 0;
         for (var i = 0; i < this.selectedSquares.length-1; i++){
             if (((this.selectedSquares[i+1]) === ((this.selectedSquares[i]) +1))){
                 countHorizontal++
-                // TODO whenever numbers length >=4, check for sequential.
-                numbers.push(this.selectedSquares[i])
+                // TODO: if number not in numbers, push? else already there?
+                // numbers.push(this.selectedSquares[i])
                 // Testing; delete when not needed.
-                console.log(numbers)
+                console.log(this.selectedSquares)
+                // console.log(numbers)
                 console.log(countHorizontal)
+                if (countHorizontal >= 5){
+                    console.log('Game Over')
+                    main.resetGame()
+                }
             }
+            // TODO 9/7/2022 trying:
             else {
-                countHorizontal = 0
+                countHorizontal = 1
             }
+            // end trying
+
             /*else if ((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) +10)){
                 countVertical++;
             }
             */
         }
+        // countHorizontal = 0  // this doesn't work either. counts ones on side.
 
-        if (countHorizontal == 4){
-            let first: number = numbers[0]
-            let last: number = numbers[4]
+        // TODO: vertical.
+        /*
+        for (var i = 0; i < this.selectedSquares.length-1; i++){
+            if (((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) + 10))){
+                countVertical++
+                numbersVertical.push(this.selectedSquares[i])
+                console.log(numbersVertical)
+                console.log(countVertical)
+            }
+            else {
+                countVertical = 0
+            }
+        }
+        */
+
+        // todo 9/7/2022 trying:
+        /*
+        if (countHorizontal >= 5){
             console.log('Game Over.')
             main.resetGame()
-            //if ((numbers[0] + 4) == numbers[4]){
-            //    console.log('Winner. Game Over. 5 in a row.')
-            //}
-            // Game over function. reset game.
         }
+        */
+        
+
+        /*
+        else if (countVertical == 4){
+            console.log('Game over vertical')
+            main.resetGame()
+        }
+        */
 /*
         for (var i = 0; i < this.selectedSquares.length-1; i++){
             // if(((this.selectedSquares[i]) +10) === (this.selectedSquares[i+10])){
@@ -196,19 +226,10 @@ export class GridMap {
             // Reset game
         }
         */
-
         // Also need to check vertically. need squareNumberPerRow (for column number).
         // == selectedSquares[i]+squareNumberPerRow === selectedSquares[i+squareNumberPerRow] +1
         // eg. [1]+10 === [1+10] 
         //      ie. 11  === [11]. Yeah, that's it.
-
-    }
-
-    // TODO 09/07/2022: Array recording it? Or consts?
-    setArrayOne() {
-
-    }
-    setArrayTwo() {
 
     }
 }
@@ -241,11 +262,18 @@ export class Main {
         statusBar.classList.add('status-bar')
         const statusText = document.createElement('text')
         statusText.classList.add('status-text')
-        statusText.innerText = 'Status:'
+        // TODO: rendering status text.
+        statusText.innerText = this.setStatusText('Status: Player One')
+        // statusText.innerText = 'Status:'
         statusBar.appendChild(statusText)
         this.boardContainer.appendChild(statusBar)
         this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
+    }
+
+    // TODO: rendering status text.
+    setStatusText(statusText: string) {
+        return statusText
     }
 
     renderGame(rowNumber: number, squareNumberPerRow: number, occupiedSquares?: number[]) {
@@ -258,11 +286,14 @@ export class Main {
 
     // Reset game
     resetGame(){
-        this.renderGame(10, 10)
+        this.renderGame(numberRows, numberColumns)
+        // this.setStatusText('')
     }
 }
 
 // Initialise app with main object.
 const main = new Main()
-// Specify number of rows and number of squares per row.
-main.renderGame(10, 10)
+// Number of rows and columns can be configured here.
+let numberColumns: number = 10;
+let numberRows: number = 5;
+main.renderGame(numberRows, numberColumns)
