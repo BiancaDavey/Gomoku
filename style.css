@@ -7,7 +7,8 @@ body {
 }
 
 .header {
-    font-size: 2.75rem;
+    margin-top: 40px;
+    font-size: 3rem;
     padding: 1rem;
     background-color: black;
     color: #FFFFFF;
@@ -62,7 +63,6 @@ body {
     background-color: black;
 }
 
-/* 08/07/2022 Comment this out to return to it being across whole screen.*/
 .board {
     display: flex;
     flex-direction: column;
@@ -71,19 +71,6 @@ body {
     /* margin: 0 auto; */
     align-items: center;
 }
-
-/*
-.user-display {
-    font-size: 2.5rem;
-    padding: 2.5rem;
-    background-color: lightcyan;
-    color: black;
-    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-weight: bolder;
-    text-transform: uppercase;
-    text-align: center;
-}
-*/
 
 .status-bar {
     display: flex;
@@ -157,7 +144,7 @@ body {
 }
 
 .square.occupied {
-    background-color: rgb(255, 22, 185);
+    background-color: gold;
     cursor: not-allowed;
     /* This creates CIRCLES for occupied squares:
     border-radius: 1rem;
@@ -168,6 +155,15 @@ body {
 
 .square.selected {
     background-color: aqua;
+    border-color: rgb(138, 0, 251);
+    border-width: 6px;
+    /* Displaying cursor not allowed for selected: */
+    cursor: not-allowed;
+}
+
+/* TODO 09/07/2022: Add SelectedTwo. */
+.square.selectedTwo {
+    background-color: rgb(255, 22, 185);
     border-color: rgb(138, 0, 251);
     border-width: 6px;
     /* Displaying cursor not allowed for selected: */
