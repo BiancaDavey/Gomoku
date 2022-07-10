@@ -31,10 +31,15 @@ export class Square {
     element: HTMLDivElement
     // TODO 09/07/2022: ADD BOOLEAN
     turn: TURN
+    isTurnOne: boolean
     // TODO 09/07/2022 ADD BOOLEAN
     constructor(id: number, isOccupied: boolean = false){  // turnTwo: boolean = false 
         this.id = id
         this.status = isOccupied ? STATUS.OCCUPIED: STATUS.FREE
+        // TODO ^^ here? as occupied is boolean based.
+        this.isTurnOne = true
+        this.turn = TURN.ONE
+
         this.element = document.createElement('div')
         this.element.classList.add ('square')
         this.element.classList.add(this.status.toLowerCase())
@@ -44,19 +49,60 @@ export class Square {
         })
     }
 
-    /* 
-    TODO: update handle click function to change square selected colour alternatively, from square-selected-1; square-selected-2
-    ie. selected1=black, selected2=white. ENUM? STATUS = SELECTED1 SELECTED2?
-    */
-    handleClick() {
-        main.gameStatusDisplay()
+    reverseTurn(isTurnOne: boolean) {
+        if (isTurnOne){
+            isTurnOne = false
+            return isTurnOne
+        }
+        else if (!isTurnOne){
+            isTurnOne = true
+            return isTurnOne
+        }
+    }
+
+    handleClick() {  // !!!! ORIGINAL
+        console.log(this.isTurnOne)
+        ////let assessed: boolean = false
+        main.gameStatusDisplay() // !!!! ORIGINAL
         // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
-        if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return
-        this.element.classList.remove(this.status.toLowerCase())
+        if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return // !!!! ORIGINAL
+        this.element.classList.remove(this.status.toLowerCase()) // !!!! ORIGINAL
+        ////console.log(assessed)
         // TODO: HERE: 09/07/2022 Add SelectedTwo. Alternate clicks setting status as occupied or selected. Upon second click. ___ DO THIS
-        this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
-        // this.status = this.status === STATUS.FREE ? STATUS.SELECTEDTWO : STATUS.FREE // no styling? is selected a standard state?
-        this.element.classList.add(this.status.toLowerCase())
+        if (this.isTurnOne){
+            this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
+            this.element.classList.add(this.status.toLowerCase())   
+            //this.turn = TURN.TWO    // 10/7/0222 it works, but isn't chanigng tostatus2.  
+            ////assessed = true  // odesn't work either. 
+            ////console.log(assessed)  
+            console.log(this.turn)  
+            this.reverseTurn(this.isTurnOne)
+        }
+        else {
+            this.status = this.status === STATUS.FREE ? STATUS.SELECTEDTWO : STATUS.FREE
+            this.element.classList.add(this.status.toLowerCase())
+            this.reverseTurn(this.isTurnOne)   
+            //this.turn = TURN.ONE    
+            ////assessed = true     
+        }
+
+
+        // this doesn't work either.
+        /*
+        else if (assessed = true){
+            if (this.turn = TURN.ONE) {
+                this.turn = TURN.TWO
+                console.log(this.turn)
+            }
+            else {
+                this.turn = TURN.ONE
+            }
+        }
+        */
+
+        // !!!! 10/07/2022 ORIGINAL
+        //this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE // !!!! ORIGINAL
+        //this.element.classList.add(this.status.toLowerCase()) // !!!! ORIGINAL
     }
 
     get isFree() {
@@ -100,7 +146,6 @@ export class Row {
         return this.squares.filter((square) => square.isSelected).map((square) => square.id)
     }
 
-    // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     get selectedTwoSquaresId() {
         return this.squares.filter((square) => square.isSelectedTwo).map((square) => square.id)
     }
@@ -110,7 +155,6 @@ export class GridMap {
     rows: Row[]
     freeSquares: number[] = []
     selectedSquares: number[]  = []
-    // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     selectedTwoSquares: number[] = []
     element: HTMLDivElement
 
@@ -122,16 +166,7 @@ export class GridMap {
         this.element.classList.add('grid-map')
         this.element.append(...this.rows.map((row) => row.element))
         this.element.addEventListener('click', () => {
-            /*
-            // TODO 09/07/2022 if selectedOne=odd, turn is selectedTwo.
-            if (!(this.selectedSquares.length % 2 == 0)){
-                let mostRecent: number = this.selectedSquares.length-1;
-                // const lastSquare = this.selectedSquares.at(-1);
-                this.selectedTwoSquares.push(mostRecent)
-            }
-            */
             this.getSelectedSquaresId()
-            // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
             this.getSelectedTwoSquaresId()
             this.checkDraw()
             this.checkFiveInARow()
@@ -143,7 +178,6 @@ export class GridMap {
         console.log(`selected squares: ${this.selectedSquares.join(',')}`)
     }
 
-    // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     getSelectedTwoSquaresId(){
         this.selectedTwoSquares = this.rows.map(row => row.selectedTwoSquaresId).flat()
         console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
@@ -158,7 +192,6 @@ export class GridMap {
     }
 
     checkFiveInARow() {
-        // console.log('Checking for 5 in a row')
         let countHorizontal: number = 1
         let countVertical: number = 1
         let numCol: number = 10
