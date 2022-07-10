@@ -1,8 +1,5 @@
-import { UpdateText } from './app';
 /*
-
 TODO 09/07/2022 ADD SELECTEDTWO:
-
 * 1. X "Selected" add additional STATUS SELECTEDTWO.
 * 2. SelectedTwo implemented every second click.
 * 3. X Styling colour pink for SELECTEDTWO.
@@ -11,7 +8,6 @@ TODO 09/07/2022 ADD SELECTEDTWO:
 * 6. X Check if five in a row horizontally (record array? Map based on config? ie. number of rows/cols?)
 * 7. Check if five in a row vertically
 * 8. X Reset upon five in a row
-
 */
 
 enum STATUS {
@@ -53,7 +49,7 @@ export class Square {
     ie. selected1=black, selected2=white. ENUM? STATUS = SELECTED1 SELECTED2?
     */
     handleClick() {
-        main.gameOn()
+        main.gameStatusDisplay()
         // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
         if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return
         this.element.classList.remove(this.status.toLowerCase())
@@ -80,24 +76,6 @@ export class Square {
     }
 }
 
-// ???
-/*
-export class UpdateText {
-    text: string
-    element: HTMLTitleElement
-    constructor(text: string){
-        this.text = this.updateText('')
-        this.element = document.createElement('title')
-        this.element.classList.add('status-new-text')       
-    }
-
-    updateText(updateText: string) {
-        // this.text = updateText
-        return updateText
-    }
-}
-*/
-
 export class Row {
     id: number
     squares: Square[]
@@ -114,12 +92,12 @@ export class Row {
         this.element.append(...this.squares.map((square) => square.element))
     }
 
-    get selectedSquaresId() {
-        return this.squares.filter((square) => square.isSelected).map((square) => square.id)
-    }
-
     get freeSquaresId(){
         return this.squares.filter((square) => square.isFree).map((square) => square.id)
+    }
+
+    get selectedSquaresId() {
+        return this.squares.filter((square) => square.isSelected).map((square) => square.id)
     }
 
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
@@ -130,10 +108,10 @@ export class Row {
 
 export class GridMap {
     rows: Row[]
+    freeSquares: number[] = []
     selectedSquares: number[]  = []
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     selectedTwoSquares: number[] = []
-    freeSquares: number[] = []
     element: HTMLDivElement
 
     constructor(rowNumber: number, squareNumberPerRow: number, occupiedSquares: number[] = []){
@@ -160,24 +138,23 @@ export class GridMap {
         })
     }
 
-    checkDraw() {
-        this.freeSquares = this.rows.map(row => row.freeSquaresId).flat()
-        if (this.freeSquares.length === 0){
-            console.log('Draw.')
-            main.resetGame()
-        }
-    }
-
     getSelectedSquaresId(){
         this.selectedSquares = this.rows.map(row => row.selectedSquaresId).flat()
         console.log(`selected squares: ${this.selectedSquares.join(',')}`)
-        //this.checkFiveInARow()
     }
 
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     getSelectedTwoSquaresId(){
         this.selectedTwoSquares = this.rows.map(row => row.selectedTwoSquaresId).flat()
         console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
+    }
+
+    checkDraw() {
+        this.freeSquares = this.rows.map(row => row.freeSquaresId).flat()
+        if (this.freeSquares.length === 0){
+            console.log('Draw.')
+            main.resetGame()
+        }
     }
 
     checkFiveInARow() {
@@ -224,51 +201,32 @@ export class Main {
     gridMap: GridMap | null = null
     boardContainer: HTMLDivElement
     statusText: HTMLDivElement
-    statusBar: HTMLDivElement
+    decorBar: HTMLDivElement
 
     constructor() {
         this.boardContainer = document.createElement('div')
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
-        
-        // Reset button:
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
         resetButton.innerText = 'Reset'
         resetButton.addEventListener('click', () => {
             console.log("Reset game.")
-            // Reset game function call.
             this.resetGame()
         })
-        
-        // Status Bar:
-        this.statusBar = document.createElement('div')
-        this.statusBar.id = 'status-bar'
-        this.statusBar.classList.add('status-bar')
-        // const statusBar = document.createElement('div')
-        // statusBar.classList.add('status-bar')
-        
-        // Status Text:
-        // TODO 10/7/2022 trying as div above:
+        this.decorBar = document.createElement('div')
+        this.decorBar.id = 'decor-bar'
+        this.decorBar.classList.add('decor-bar')
         this.statusText = document.createElement('div')
         this.statusText.id = 'status-text'
         this.statusText.classList.add('status-text')
-        this.statusText.innerText = this.setStatusText('Status')
-        // const statusText = document.createElement('text')
-        // statusText.classList.add('status-text')
-        // TODO: rendering status text.
-        // statusText.innerText = this.setStatusText('Status')
-        
-        // TODO: render text when applicable?
-        //this.boardContainer.appendChild(statusBar)
-        // this.boardContainer.appendChild(statusText)
+        this.statusText.innerText = this.setStatusText('Welcome')
         this.boardContainer.appendChild(resetButton)
-        document.getElementById('main')?.append(this.statusBar)
+        document.getElementById('main')?.append(this.decorBar)
         document.getElementById('main')?.append(this.boardContainer)
         document.getElementById('main')?.append(this.statusText)
     }
 
-    // TODO: rendering status text.
     setStatusText(statusUpdateText: string) {
         this.boardContainer.appendChild(this.statusText)
         return statusUpdateText
@@ -282,21 +240,17 @@ export class Main {
         this.boardContainer.append(this.gridMap.element)
     }
 
-    // Current game display
-    gameOn() {
+    gameStatusDisplay() {
         this.statusText.innerText = this.setStatusText('Game On')  // It's now on the bottom of the page.
-        document.getElementById('main')?.append(this.statusText)
-        // this.renderGame(numberRows, numberColumns)        
+        document.getElementById('main')?.append(this.statusText)      
     }
 
-    // Reset game
     resetGame(){
-        this.statusText.innerText = this.setStatusText('Reset')  // It's now on the bottom of the page.
+        this.statusText.innerText = this.setStatusText('Game Reset')  // It's now on the bottom of the page.
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
     }
 
-    // Game over
     gameOver(){
         this.statusText.innerText = this.setStatusText('Game Over')  // It's now on the bottom of the page.
         document.getElementById('main')?.append(this.statusText)
