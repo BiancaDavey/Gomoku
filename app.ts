@@ -14,8 +14,6 @@ TODO 09/07/2022 ADD SELECTEDTWO:
 
 */
 
-// import { nodeModuleNameResolver } from "typescript"
-
 enum STATUS {
     FREE = 'FREE',
     SELECTED = 'SELECTED', 
@@ -29,7 +27,6 @@ enum TURN {
     ONE = 'ONE',
     TWO = 'TWO',
 }
-
 // OR a boolean?
 
 export class Square {
@@ -65,6 +62,10 @@ export class Square {
         this.element.classList.add(this.status.toLowerCase())
     }
 
+    get isFree() {
+        return this.status === STATUS.FREE
+    }
+
     get isSelected() {
         return this.status === STATUS.SELECTED
     }
@@ -76,13 +77,6 @@ export class Square {
     get isOccupied() {
         return this.status === STATUS.OCCUPIED
     }
-
-    // TODO: 9/7/2022 Add boolean- method to return click turn?
-    /*
-    get turn(){
-        return this.turn === TURN.ONE
-    }
-    */
 }
 
 // ???
@@ -123,6 +117,10 @@ export class Row {
         return this.squares.filter((square) => square.isSelected).map((square) => square.id)
     }
 
+    get freeSquaresId(){
+        return this.squares.filter((square) => square.isFree).map((square) => square.id)
+    }
+
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     get selectedTwoSquaresId() {
         return this.squares.filter((square) => square.isSelectedTwo).map((square) => square.id)
@@ -131,10 +129,10 @@ export class Row {
 
 export class GridMap {
     rows: Row[]
-    // Return occupied squares?
     selectedSquares: number[]  = []
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     selectedTwoSquares: number[] = []
+    freeSquares: number[] = []
     element: HTMLDivElement
 
     constructor(rowNumber: number, squareNumberPerRow: number, occupiedSquares: number[] = []){
@@ -156,13 +154,23 @@ export class GridMap {
             this.getSelectedSquaresId()
             // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
             this.getSelectedTwoSquaresId()
+            this.checkDraw()
+            this.checkFiveInARow()
         })
+    }
+
+    checkDraw() {
+        this.freeSquares = this.rows.map(row => row.freeSquaresId).flat()
+        if (this.freeSquares.length === 0){
+            console.log('Draw.')
+            main.resetGame()
+        }
     }
 
     getSelectedSquaresId(){
         this.selectedSquares = this.rows.map(row => row.selectedSquaresId).flat()
         console.log(`selected squares: ${this.selectedSquares.join(',')}`)
-        this.checkFiveInARow()
+        //this.checkFiveInARow()
     }
 
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
@@ -262,6 +270,6 @@ export class Main {
 // Initialise app with main object.
 const main = new Main()
 // Number of rows and columns can be configured here.
-let numberColumns: number = 10;
+let numberColumns: number = 5;
 let numberRows: number = 5;
 main.renderGame(numberRows, numberColumns)
