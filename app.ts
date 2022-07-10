@@ -1,13 +1,13 @@
 /*
-TODO 09/07/2022 ADD SELECTEDTWO:
-* 1. X "Selected" add additional STATUS SELECTEDTWO.
-* 2. X SelectedTwo implemented every second click.
-* 3. X Styling colour pink for SELECTEDTWO.
-* 4. X Return selected and selectedTwo.
-* 5. Remove Occupied? Or at least comment it all out; as not needed I think.
-* 6. X Check if five in a row horizontally (record array? Map based on config? ie. number of rows/cols?)
-* 7. Check if five in a row vertically
-* 8. X Reset upon five in a row
+TODO:
+* !!! VERTICAL COUNTER
+* !!! DIAGONAL COUNTER
+* - Score display
+* - Improve function for status and score display- make it into one concise function.
+        Take param for eg. status, string, use if ('status=="etc"), display.
+* - Remove "occupied" as not using
+* Bonus: color scheme choice, this may be easy? Button/Toggle: purple and green modes.
+* Bonus: user chooses goal number; "best of", wins prizes? health bar?
 */
 
 enum STATUS {
@@ -227,15 +227,13 @@ export class Main {
             console.log("Reset game.")
             this.resetGame()
         })
-        // TODO: add score board, to attempt bonus point. (other thing- colour scheme.). And, could do a "set games for win?" ie. overall win.
-        // todo could have something acculumating either side, eg. coins, cats, etc
         this.decorBar = document.createElement('div')
         this.decorBar.id = 'decor-bar'
         this.decorBar.classList.add('decor-bar')
         this.statusText = document.createElement('div')
         this.statusText.id = 'status-text'
         this.statusText.classList.add('status-text')
-        this.statusText.innerText = this.setStatusText('Welcome')
+        this.statusText.innerText = this.setStatusText('Welcome. Player One Turn.')
         this.scoreText = document.createElement('div')
         this.scoreText.id = 'score-text'
         this.scoreText.classList.add('score-text')
@@ -266,20 +264,23 @@ export class Main {
     }
 
     gameStatusDisplay() {
-        this.statusText.innerText = this.setStatusText('Game On')
+        if (clickCounter % 2 != 0){
+            this.statusText.innerText = this.setStatusText('Game On: Player Two Turn')            
+        }
+        else if (clickCounter % 2 == 0) {
+            this.statusText.innerText = this.setStatusText('Game On: Player One Turn')
+        }
         document.getElementById('main')?.append(this.statusText) 
-        this.scoreText.innerText = this.setScoreText('Score: Player One - ; Player Two - ')
-        document.getElementById('main')?.append(this.scoreText)
-        // TODO: add display of player one (white) player two (black) turns. 
-            
+        this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
+        document.getElementById('main')?.append(this.scoreText)       
     }
 
     resetGame(){
-        this.statusText.innerText = this.setStatusText('Game Reset')
+        this.statusText.innerText = this.setStatusText('Game Reset. Click to start a new game: Player One Turn')
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
-        this.scoreText.innerText = this.setScoreText('Score: Player One - ; Player Two - ')
+        this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
 
@@ -290,7 +291,7 @@ export class Main {
         clickCounter = 0
         playerOneScore++
         console.log(playerOneScore) // test, delete when done. Incremented.
-        this.scoreText.innerText = this.setScoreText('Score: Player One - ; Player Two - ')
+        this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
 
@@ -301,7 +302,7 @@ export class Main {
         clickCounter = 0
         playerTwoScore++
         console.log(playerTwoScore)  // test, delete when done
-        this.scoreText.innerText = this.setScoreText('Score: Player One - ; Player Two - ')
+        this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
 
@@ -310,10 +311,9 @@ export class Main {
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
-        this.scoreText.innerText = this.setScoreText('Score: Player One - ; Player Two - ')
+        this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
-
 }
 
 // Initialise app with main object.
