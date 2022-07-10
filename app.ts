@@ -13,7 +13,6 @@ TODO 09/07/2022 ADD SELECTEDTWO:
 enum STATUS {
     FREE = 'FREE',
     SELECTED = 'SELECTED', 
-    // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
     SELECTEDTWO = 'SELECTEDTWO',
     OCCUPIED = 'OCCUPIED',
 }
@@ -25,6 +24,8 @@ enum TURN {
 }
 // OR a boolean?
 
+let clickCounterNew: number = 0
+
 export class Square {
     id: number
     status: STATUS
@@ -32,6 +33,7 @@ export class Square {
     // TODO 09/07/2022: ADD BOOLEAN
     turn: TURN
     isTurnOne: boolean
+    clickCount: number
     // TODO 09/07/2022 ADD BOOLEAN
     constructor(id: number, isOccupied: boolean = false){  // turnTwo: boolean = false 
         this.id = id
@@ -39,14 +41,21 @@ export class Square {
         // TODO ^^ here? as occupied is boolean based.
         this.isTurnOne = true
         this.turn = TURN.ONE
-
+        this.clickCount = 0
         this.element = document.createElement('div')
         this.element.classList.add ('square')
         this.element.classList.add(this.status.toLowerCase())
         this.element.addEventListener('click', () => {
-            // TODO: 09/07/2022 Add return enum TURN? or return boolean? ___ DO THIS
+            // TODO: 09/07/2022 Add return enum TURN? or return boolean? ___ DO THIS. Function to determine turn here?
             this.handleClick()
         })
+    }
+
+    // NEWEST.
+    incrementClickCounter() {
+        //clickCounterNew++
+        clickCounterNew = clickCounterNew+1
+        return clickCounterNew
     }
 
     reverseTurn(isTurnOne: boolean) {
@@ -62,6 +71,14 @@ export class Square {
 
     handleClick() {  // !!!! ORIGINAL
         console.log(this.isTurnOne)
+        //let clickNumber = this.incrementClickCounter
+        //console.log(clickNumber)
+        console.log('click counter pre increment')
+        console.log(clickCounterNew)
+        this.clickCount++  // PROBLEM is that click count resets.
+        console.log('click counter incremented:')
+        console.log(clickCounterNew)
+        this.incrementClickCounter()
         ////let assessed: boolean = false
         main.gameStatusDisplay() // !!!! ORIGINAL
         // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
@@ -69,19 +86,19 @@ export class Square {
         this.element.classList.remove(this.status.toLowerCase()) // !!!! ORIGINAL
         ////console.log(assessed)
         // TODO: HERE: 09/07/2022 Add SelectedTwo. Alternate clicks setting status as occupied or selected. Upon second click. ___ DO THIS
-        if (this.isTurnOne){
+        if (clickCounterNew % 2 != 0){
             this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
             this.element.classList.add(this.status.toLowerCase())   
             //this.turn = TURN.TWO    // 10/7/0222 it works, but isn't chanigng tostatus2.  
             ////assessed = true  // odesn't work either. 
             ////console.log(assessed)  
             console.log(this.turn)  
-            this.reverseTurn(this.isTurnOne)
+            ///=this.reverseTurn(this.isTurnOne)
         }
         else {
             this.status = this.status === STATUS.FREE ? STATUS.SELECTEDTWO : STATUS.FREE
             this.element.classList.add(this.status.toLowerCase())
-            this.reverseTurn(this.isTurnOne)   
+            ///= this.reverseTurn(this.isTurnOne)   
             //this.turn = TURN.ONE    
             ////assessed = true     
         }
@@ -282,12 +299,14 @@ export class Main {
         this.statusText.innerText = this.setStatusText('Game Reset')  // It's now on the bottom of the page.
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
+        clickCounterNew = 0
     }
 
     gameOver(){
         this.statusText.innerText = this.setStatusText('Game Over')  // It's now on the bottom of the page.
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
+        clickCounterNew = 0
     }
 }
 

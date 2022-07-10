@@ -149,9 +149,9 @@ body {
 }
 
 .square.selected {
-    background-color: aqua;
+    background-color: white;
     border-color: rgb(138, 0, 251);
-    border-width: 6px;
+    /*border-width: 6px;*/
     cursor: not-allowed;
 }
 
