@@ -94,6 +94,21 @@ body {
     color: white;
     /*color: #00ff41;*/
     height: fit-content;
+    margin-bottom: 12px;
+}
+
+.score-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-size: 1.5rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: #00ff41;
+    height: fit-content;
+    margin-top: 12px;
 }
 
 .reset-button {
