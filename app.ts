@@ -1,3 +1,4 @@
+import { UpdateText } from './app';
 /*
 
 TODO 09/07/2022 ADD SELECTEDTWO:
@@ -9,7 +10,7 @@ TODO 09/07/2022 ADD SELECTEDTWO:
 * 5. Remove Occupied? Or at least comment it all out; as not needed I think.
 * 6. X Check if five in a row horizontally (record array? Map based on config? ie. number of rows/cols?)
 * 7. Check if five in a row vertically
-* 8. Reset upon five in a row
+* 8. X Reset upon five in a row
 
 */
 
@@ -84,6 +85,24 @@ export class Square {
     */
 }
 
+// ???
+/*
+export class UpdateText {
+    text: string
+    element: HTMLTitleElement
+    constructor(text: string){
+        this.text = this.updateText('')
+        this.element = document.createElement('title')
+        this.element.classList.add('status-new-text')       
+    }
+
+    updateText(updateText: string) {
+        // this.text = updateText
+        return updateText
+    }
+}
+*/
+
 export class Row {
     id: number
     squares: Square[]
@@ -143,7 +162,7 @@ export class GridMap {
     getSelectedSquaresId(){
         this.selectedSquares = this.rows.map(row => row.selectedSquaresId).flat()
         console.log(`selected squares: ${this.selectedSquares.join(',')}`)
-        this.checkWinner()
+        this.checkFiveInARow()
     }
 
     // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
@@ -152,85 +171,35 @@ export class GridMap {
         console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
     }
 
-    checkWinner() {
-        let countHorizontal: number = 1;
-        // let numbers: number[] = []  
-        //let numbersVertical: number[] = []      
-        //let countVertical: number = 0;
+    checkFiveInARow() {
+        // console.log('Checking for 5 in a row')
+        let countHorizontal: number = 1
+        let countVertical: number = 1
+        let numCol: number = 10
+
+        // Check for five in a column vertically.
+        for (var j = 0; j < this.selectedSquares.length-1; j++){
+            if (((this.selectedSquares[j]) + 10) === (this.selectedSquares[numCol])){
+                console.log(numCol)
+                console.log('Vertical match: j and 10')  // Doesn't work.
+                console.log(this.selectedSquares[j])
+                console.log(this.selectedSquares[numCol])
+            }
+        }
+
+        // Check for five in a row horizontally.
         for (var i = 0; i < this.selectedSquares.length-1; i++){
             if (((this.selectedSquares[i+1]) === ((this.selectedSquares[i]) +1))){
                 countHorizontal++
-                // TODO: if number not in numbers, push? else already there?
-                // numbers.push(this.selectedSquares[i])
-                // Testing; delete when not needed.
-                console.log(this.selectedSquares)
-                // console.log(numbers)
-                console.log(countHorizontal)
                 if (countHorizontal >= 5){
                     console.log('Game Over')
                     main.resetGame()
                 }
             }
-            // TODO 9/7/2022 trying:
             else {
                 countHorizontal = 1
             }
-            // end trying
-
-            /*else if ((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) +10)){
-                countVertical++;
-            }
-            */
         }
-        // countHorizontal = 0  // this doesn't work either. counts ones on side.
-
-        // TODO: vertical.
-        /*
-        for (var i = 0; i < this.selectedSquares.length-1; i++){
-            if (((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) + 10))){
-                countVertical++
-                numbersVertical.push(this.selectedSquares[i])
-                console.log(numbersVertical)
-                console.log(countVertical)
-            }
-            else {
-                countVertical = 0
-            }
-        }
-        */
-
-        // todo 9/7/2022 trying:
-        /*
-        if (countHorizontal >= 5){
-            console.log('Game Over.')
-            main.resetGame()
-        }
-        */
-        
-
-        /*
-        else if (countVertical == 4){
-            console.log('Game over vertical')
-            main.resetGame()
-        }
-        */
-/*
-        for (var i = 0; i < this.selectedSquares.length-1; i++){
-            // if(((this.selectedSquares[i]) +10) === (this.selectedSquares[i+10])){
-            if ((this.selectedSquares[i+10]) === ((this.selectedSquares[i]) +10)){
-                countVertical++;
-            }
-        }
-        if (countVertical == 4){
-            console.log('Winner. Game Over. 5 in a row vertical.')
-            // Reset game
-        }
-        */
-        // Also need to check vertically. need squareNumberPerRow (for column number).
-        // == selectedSquares[i]+squareNumberPerRow === selectedSquares[i+squareNumberPerRow] +1
-        // eg. [1]+10 === [1+10] 
-        //      ie. 11  === [11]. Yeah, that's it.
-
     }
 }
 
@@ -263,17 +232,17 @@ export class Main {
         const statusText = document.createElement('text')
         statusText.classList.add('status-text')
         // TODO: rendering status text.
-        statusText.innerText = this.setStatusText('Status: Player One')
-        // statusText.innerText = 'Status:'
-        statusBar.appendChild(statusText)
+        statusText.innerText = this.setStatusText('Status')
         this.boardContainer.appendChild(statusBar)
+        // TODO: render text when applicable?
+        this.boardContainer.appendChild(statusText)
         this.boardContainer.appendChild(resetButton)
         document.getElementById('main')?.append(this.boardContainer)
     }
 
     // TODO: rendering status text.
-    setStatusText(statusText: string) {
-        return statusText
+    setStatusText(statusUpdateText: string) {
+        return statusUpdateText
     }
 
     renderGame(rowNumber: number, squareNumberPerRow: number, occupiedSquares?: number[]) {
@@ -287,7 +256,6 @@ export class Main {
     // Reset game
     resetGame(){
         this.renderGame(numberRows, numberColumns)
-        // this.setStatusText('')
     }
 }
 

@@ -81,7 +81,7 @@ body {
     background-image: radial-gradient(rgb(138, 0, 251),black);
     */
     padding: 1rem;
-    margin: 10px;
+    /*margin: 10px;*/
     height: 90px;
     width: 100%;
 }
@@ -90,12 +90,13 @@ body {
     font-size: 1.5rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
-    text-align: left;
+    text-align: center;
     color: white;
     width: 50%;
     height: fit-content;
     transform: translateY(100%);
     transform: translateX(100%);
+    margin-bottom: 40px;
 }
 
 .reset-button {
