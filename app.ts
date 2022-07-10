@@ -53,6 +53,7 @@ export class Square {
     ie. selected1=black, selected2=white. ENUM? STATUS = SELECTED1 SELECTED2?
     */
     handleClick() {
+        main.gameOn()
         // TODO 09/07/2022 ADD SELECTEDTWO: ___ OK
         if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return
         this.element.classList.remove(this.status.toLowerCase())
@@ -201,7 +202,9 @@ export class GridMap {
                 countHorizontal++
                 if (countHorizontal >= 5){
                     console.log('Game Over')
-                    main.resetGame()
+                    main.statusText.innerText = main.setStatusText('Game Over')  // It's now on the bottom of the page.
+                    document.getElementById('main')?.append(main.statusText)
+                    main.gameOver()
                 }
             }
             else {
@@ -220,36 +223,54 @@ type Board = {
 export class Main {
     gridMap: GridMap | null = null
     boardContainer: HTMLDivElement
+    statusText: HTMLDivElement
+    statusBar: HTMLDivElement
 
     constructor() {
         this.boardContainer = document.createElement('div')
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
+        
         // Reset button:
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
         resetButton.innerText = 'Reset'
-        // Event handler for clicking on reset button:
         resetButton.addEventListener('click', () => {
             console.log("Reset game.")
             // Reset game function call.
             this.resetGame()
         })
-        const statusBar = document.createElement('div')
-        statusBar.classList.add('status-bar')
-        const statusText = document.createElement('text')
-        statusText.classList.add('status-text')
+        
+        // Status Bar:
+        this.statusBar = document.createElement('div')
+        this.statusBar.id = 'status-bar'
+        this.statusBar.classList.add('status-bar')
+        // const statusBar = document.createElement('div')
+        // statusBar.classList.add('status-bar')
+        
+        // Status Text:
+        // TODO 10/7/2022 trying as div above:
+        this.statusText = document.createElement('div')
+        this.statusText.id = 'status-text'
+        this.statusText.classList.add('status-text')
+        this.statusText.innerText = this.setStatusText('Status')
+        // const statusText = document.createElement('text')
+        // statusText.classList.add('status-text')
         // TODO: rendering status text.
-        statusText.innerText = this.setStatusText('Status')
-        this.boardContainer.appendChild(statusBar)
+        // statusText.innerText = this.setStatusText('Status')
+        
         // TODO: render text when applicable?
-        this.boardContainer.appendChild(statusText)
+        //this.boardContainer.appendChild(statusBar)
+        // this.boardContainer.appendChild(statusText)
         this.boardContainer.appendChild(resetButton)
+        document.getElementById('main')?.append(this.statusBar)
         document.getElementById('main')?.append(this.boardContainer)
+        document.getElementById('main')?.append(this.statusText)
     }
 
     // TODO: rendering status text.
     setStatusText(statusUpdateText: string) {
+        this.boardContainer.appendChild(this.statusText)
         return statusUpdateText
     }
 
@@ -261,8 +282,24 @@ export class Main {
         this.boardContainer.append(this.gridMap.element)
     }
 
+    // Current game display
+    gameOn() {
+        this.statusText.innerText = this.setStatusText('Game On')  // It's now on the bottom of the page.
+        document.getElementById('main')?.append(this.statusText)
+        // this.renderGame(numberRows, numberColumns)        
+    }
+
     // Reset game
     resetGame(){
+        this.statusText.innerText = this.setStatusText('Reset')  // It's now on the bottom of the page.
+        document.getElementById('main')?.append(this.statusText)
+        this.renderGame(numberRows, numberColumns)
+    }
+
+    // Game over
+    gameOver(){
+        this.statusText.innerText = this.setStatusText('Game Over')  // It's now on the bottom of the page.
+        document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
     }
 }
