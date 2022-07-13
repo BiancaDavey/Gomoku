@@ -17,7 +17,7 @@ body {
     letter-spacing: 3;
     text-transform: uppercase;
     text-align: center;
-    animation: flicker 10s linear infinite;
+    animation: flicker 8s linear infinite;
 }
 
 @keyframes flicker {
@@ -76,7 +76,20 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* TODO: V2 - green. */
     background-image: linear-gradient(black, rgb(138, 0, 251), black);
+    padding: 1rem;
+    height: 90px;
+    width: 100%;
+}
+
+
+.decor-bar-theme-green {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* TODO: V2 - green. */
+    background-image: linear-gradient(black, rgb(0, 144, 17), black);  /* rgb(0, 255, 65) */
     padding: 1rem;
     height: 90px;
     width: 100%;
@@ -106,13 +119,21 @@ body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-align: center;
+    /* TODO: V2 - green. */
+    color: aqua;
+    /*
+    color: rgb(255, 22, 185);
+    */
+    /*
     color: #00ff41;
+    */
     height: fit-content;
     margin-top: 12px;
 }
 
 .reset-button {
     font-size: 1.15rem;
+    /* TODO: V2 - green. */
     color: aqua;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
@@ -120,17 +141,47 @@ body {
     text-align: center;
     padding: 0.75rem;
     margin-top: 20px;
-    background-color: rgb(33, 33, 33);
     max-width: fit-content;
+    background-color: rgb(33, 33, 33);
     border-width: 8px;
     border-radius: 5;
     border-style: double;
+    /* TODO: V2 - green. */
     border-color: rgb(255, 22, 185);
 }
 
 .reset-button:hover {
     box-shadow: 0px 0px 40px rgb(255, 76, 201);
+}
 
+.theme-toggle {
+    font-size: 1.15rem;
+    /* TODO: V2 - green. */
+    color: aqua;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 0.75rem;
+    margin-top: 20px;
+    max-width: fit-content;
+    background-color: rgb(33, 33, 33);
+    border-width: 8px;
+    border-radius: 5;
+    border-style: double;
+    /* TODO: V2 - green. */
+    border-color: rgb(255, 22, 185);
+}
+
+.theme-toggle:hover {
+    color: #00ff41;
+    border-color: #00ff41;
+    box-shadow: 0px 0px 40px #00ff41;
+}
+
+/* TODO- use checkbox state, or utilise square selected status same thing.*/
+.theme-toggle:checked {
+    background-color: red;
 }
 
 .grid-map {
@@ -159,12 +210,14 @@ body {
     /* This creates CIRCLES for occupied squares:
     border-radius: 1rem;
     */
+    /* TODO: V2 - green. */
     border-color: rgb(138, 0, 251);
     border-width: 6px;
 }
 
 .square.selected {
     background-color: white;
+    /* TODO: V2 - green. */
     border-color: rgb(138, 0, 251);
     /*border-width: 6px;*/
     cursor: not-allowed;
@@ -179,12 +232,14 @@ body {
 }
 
 .square.free {
+    /* TODO: V2 - green. */
     border-color: rgb(138, 0, 251);
     border-width: 3px;
 }
 
 .square.free:hover {
-    background-color: teal;
+    /* TODO: V2 - green. */
+    background-color: rgb(255, 22, 185);
     border-color: rgb(138, 0, 251);
     border-width: 6px;
 }

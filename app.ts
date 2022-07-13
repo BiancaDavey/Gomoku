@@ -17,6 +17,12 @@ enum STATUS {
     OCCUPIED = 'OCCUPIED',
 }
 
+enum THEME {
+    THEMEONE = 'THEMEONE',
+    THEMETWO = 'THEMETWO',
+}
+
+let themeClickCounter: number = 0
 let clickCounter: number = 0
 let playerOneScore: number = 0
 let playerTwoScore: number = 0
@@ -227,6 +233,13 @@ export class Main {
             console.log("Reset game.")
             this.resetGame()
         })
+        const themeToggle = document.createElement('div')
+        themeToggle.classList.add('theme-toggle')
+        themeToggle.innerText = 'Theme'
+        themeToggle.addEventListener('click', () => {
+            console.log("Theme switched.")
+            this.themeToggled()
+        })
         this.decorBar = document.createElement('div')
         this.decorBar.id = 'decor-bar'
         this.decorBar.classList.add('decor-bar')
@@ -239,6 +252,7 @@ export class Main {
         this.scoreText.classList.add('score-text')
         this.scoreText.innerText = this.setStatusText('Score: 0, 0')
         this.boardContainer.appendChild(resetButton)
+        this.boardContainer.appendChild(themeToggle)
         document.getElementById('main')?.append(this.decorBar)
         document.getElementById('main')?.append(this.boardContainer)
         document.getElementById('main')?.append(this.statusText)
@@ -314,6 +328,33 @@ export class Main {
         this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
+
+    themeToggled() {
+        themeClickCounter++
+        /* TODO currently, hides decor bar upon click, re-shows it upon click, doesn't render green version. */
+        if (themeClickCounter % 2 != 0){
+            // Green theme.
+            this.decorBar.classList.remove('decor-bar')
+            this.decorBar.classList.add('decor-bar-theme-green') 
+            // doesn't work still for theme green.   
+            document.getElementById('decor-bar-theme-green')?.append(this.decorBar)    
+        }
+        else if (themeClickCounter % 2 == 0) {
+            // Purple theme.
+            this.decorBar.classList.remove('decor-bar-theme-green') 
+            this.decorBar.classList.add('decor-bar')
+            document.getElementById('decor-bar')?.append(this.decorBar)
+        }
+        //document.getElementById('decor-bar')?.append(this.decorBar)
+        
+        
+        //document.getElementById('main')?.append(this.statusText) 
+        //this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
+        //document.getElementById('main')?.append(this.scoreText)  
+        // TODO 13/07: could base it on Square; status selected or not. and allow unselect, like before.
+            // Applies to: decorbar. squares. resetbutton. themebutton. scoretext.
+    }
+
 }
 
 // Initialise app with main object.
