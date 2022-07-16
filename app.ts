@@ -1,8 +1,3 @@
-/*
-TODO: Vertical & diagonal counter. 
-TODO: remove occupied as not using.
-*/
-
 enum STATUS {
     FREE = 'FREE',
     SELECTED = 'SELECTED', 
@@ -197,11 +192,13 @@ export class GridMap {
     }
 }
 
+/*
 type Board = {
     rowNumber: number
     squareNumberPerRow: number
     occupiedSquares?: number[]
 }
+*/
 
 export class Main {
     gridMap: GridMap | null = null
