@@ -2,8 +2,7 @@
 TODO:
 * !!! VERTICAL COUNTER
 * !!! DIAGONAL COUNTER
-TODO: Add to squares, or use neutral colour (white smoke colour).
-TODO: Centre reset and theme buttons.
+TODO: centre buttons.
 * Extras: - Improve function for status and score display- make it into one concise function.
         Take param for eg. status, string, use if ('status=="etc"), display.
 * - Remove "occupied" as not using
@@ -216,15 +215,14 @@ export class Main {
     statusText: HTMLDivElement
     scoreText: HTMLDivElement
     decorBar: HTMLDivElement
-    // TODO 13/07 trying
-    resetButton: HTMLButtonElement
-    themeToggle: HTMLButtonElement
+    // resetButton: HTMLButtonElement // ! back
+    // themeToggle: HTMLButtonElement
 
     constructor() {
         this.boardContainer = document.createElement('div')
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
-        // TODO 13/07 trying
+        /* // ! back
         this.resetButton = document.createElement('button')
         this.resetButton.classList.add('reset-button')
         this.resetButton.innerText = 'Reset'
@@ -232,6 +230,9 @@ export class Main {
             console.log('Reset game.')
             this.resetGame()
         })
+        */
+       // ! back
+        /*
         this.themeToggle = document.createElement('button')
         this.themeToggle.classList.add('theme-toggle')
         this.themeToggle.innerText = 'Theme'
@@ -239,7 +240,8 @@ export class Main {
             console.log('Theme switched.')
             this.themeToggled()
         })
-        /*
+        */
+        // ! back
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
         resetButton.innerText = 'Reset'
@@ -247,8 +249,7 @@ export class Main {
             console.log("Reset game.")
             this.resetGame()
         })
-        */
-       /*
+        
         const themeToggle = document.createElement('div')
         themeToggle.classList.add('theme-toggle')
         themeToggle.innerText = 'Theme'
@@ -256,24 +257,22 @@ export class Main {
             console.log("Theme switched.")
             this.themeToggled()
         })
-        */
         this.decorBar = document.createElement('div')
         this.decorBar.id = 'decor-bar'
         this.decorBar.classList.add('decor-bar')
         this.statusText = document.createElement('div')
         this.statusText.id = 'status-text'
         this.statusText.classList.add('status-text')
-        this.statusText.innerText = this.setStatusText('Welcome. Player One Turn.')
+        this.statusText.innerText = this.setStatusText('Welcome! Player One Turn')
         this.scoreText = document.createElement('div')
         this.scoreText.id = 'score-text'
         this.scoreText.classList.add('score-text')
         this.scoreText.innerText = this.setStatusText('Score: 0, 0')
-        // TODO 13/07 trying.
-        // this.boardContainer.appendChild(resetButton)
-        // this.boardContainer.appendChild(themeToggle)
+        this.boardContainer.appendChild(resetButton) // ! back
+        this.boardContainer.appendChild(themeToggle)
         document.getElementById('main')?.append(this.decorBar)
-        document.getElementById('main')?.append(this.resetButton)
-        document.getElementById('main')?.append(this.themeToggle)
+        // document.getElementById('main')?.append(this.resetButton) // ! back
+        // document.getElementById('main')?.append(this.themeToggle)  // ! back
         document.getElementById('main')?.append(this.boardContainer)
         document.getElementById('main')?.append(this.statusText)
         document.getElementById('main')?.append(this.scoreText)
@@ -299,10 +298,10 @@ export class Main {
 
     gameStatusDisplay() {
         if (clickCounter % 2 != 0){
-            this.statusText.innerText = this.setStatusText('Game On: Player Two Turn')            
+            this.statusText.innerText = this.setStatusText('Player Two Turn')            
         }
         else if (clickCounter % 2 == 0) {
-            this.statusText.innerText = this.setStatusText('Game On: Player One Turn')
+            this.statusText.innerText = this.setStatusText('Player One Turn')
         }
         document.getElementById('main')?.append(this.statusText) 
         this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
@@ -319,7 +318,7 @@ export class Main {
     }
 
     gameOver(){
-        this.statusText.innerText = this.setStatusText('Game Over: Player One Won')
+        this.statusText.innerText = this.setStatusText('Game Over! Player One Won')
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
@@ -330,7 +329,7 @@ export class Main {
     }
 
     gameOverWinnerTwo(){
-        this.statusText.innerText = this.setStatusText('Game Over: Player Two Won')
+        this.statusText.innerText = this.setStatusText('Game Over! Player Two Won')
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
@@ -341,7 +340,7 @@ export class Main {
     }
 
     gameOverDraw(){
-        this.statusText.innerText = this.setStatusText('Game Over: Draw')
+        this.statusText.innerText = this.setStatusText('Game Over! Draw')
         document.getElementById('main')?.append(this.statusText)
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
@@ -355,30 +354,36 @@ export class Main {
             // Green theme.
             this.decorBar.classList.remove('decor-bar')
             this.decorBar.classList.add('decor-bar-theme-green')  
+            // ! back
+            /*
             this.resetButton.classList.remove('reset-button')
             this.resetButton.classList.add('reset-button-theme-green') 
             this.themeToggle.classList.remove('theme-toggle')
             this.themeToggle.classList.add('theme-toggle-theme-green') 
+            */
             this.scoreText.classList.remove('score-text')
             this.scoreText.classList.add('score-text-theme-green')     
             document.getElementById('decor-bar-theme-green')?.append(this.decorBar)   
-            document.getElementById('reset-button-theme-green')?.append(this.resetButton)  
-            document.getElementById('theme-toggle-theme-green')?.append(this.themeToggle)   
+            // ! back
+            // document.getElementById('reset-button-theme-green')?.append(this.resetButton)  
+            // document.getElementById('theme-toggle-theme-green')?.append(this.themeToggle)   
             document.getElementById('score-text-theme-green')?.append(this.scoreText)    
         }
         else if (themeClickCounter % 2 == 0) {
             // Purple theme.
             this.decorBar.classList.remove('decor-bar-theme-green') 
             this.decorBar.classList.add('decor-bar')
-            this.resetButton.classList.remove('reset-button-theme-green') 
-            this.resetButton.classList.add('reset-button')
-            this.themeToggle.classList.remove('theme-toggle-theme-green') 
-            this.themeToggle.classList.add('theme-toggle')
+            // ! back
+            // this.resetButton.classList.remove('reset-button-theme-green') 
+            // this.resetButton.classList.add('reset-button')
+            // this.themeToggle.classList.remove('theme-toggle-theme-green') 
+            // this.themeToggle.classList.add('theme-toggle')
             this.scoreText.classList.remove('score-text-theme-green') 
             this.scoreText.classList.add('score-text')
             document.getElementById('decor-bar')?.append(this.decorBar)
-            document.getElementById('reset-button')?.append(this.resetButton)
-            document.getElementById('theme-toggle')?.append(this.themeToggle)
+            // ! back
+            // document.getElementById('reset-button')?.append(this.resetButton)
+            // document.getElementById('theme-toggle')?.append(this.themeToggle)
             document.getElementById('score-text')?.append(this.scoreText)
         }
     }
@@ -388,6 +393,6 @@ export class Main {
 // Initialise app with main object.
 const main = new Main()
 // Number of rows and columns can be configured here.
-let numberColumns: number = 3;
-let numberRows: number = 3;
+let numberColumns: number = 4;
+let numberRows: number = 4;
 main.renderGame(numberRows, numberColumns)

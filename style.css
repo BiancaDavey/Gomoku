@@ -97,13 +97,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    /*max-width: fit-content;*/
+    justify-content: center;
+    max-width: fit-content;
+
+    /*-ms-transform: translate(-50%, -50%);*/
+    /*transform: translate(50%);*/
+    /*transform: translate(820%); */
     /* TODO remove once decide style. Try shadow?*/
     /*text-decoration: underline double rgb(255, 22, 185) 2px;*/
     /*text-shadow: 2px 2px 4px #000000;*/
     font-size: 1.15rem;
-    color: aqua;
+    color: white;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-transform: uppercase;
@@ -113,15 +117,16 @@ body {
     border-width: 8px;
     border-radius: 5;
     border-style: double;
-    background-color: black;
-    /* background-color: rgb(33, 33, 33); */
-    border-color: black;
-    /* border-color: rgb(255, 22, 185); */
+    /*background-color: black;*/
+    background-color: rgb(33, 33, 33);
+    /*border-color: black;*/
+    /*border-color: rgb(255, 22, 185);*/
+    border-color: whitesmoke;
 }
 
 .reset-button:hover {
-    border-color: rgb(255, 22, 185);
-    box-shadow: 0px 0px 40px rgb(255, 76, 201);
+    /*box-shadow: 0px 0px 40px rgb(255, 76, 201);*/
+    box-shadow: 0px 0px 40px white;
 }
 
 .reset-button-theme-green {
@@ -159,30 +164,32 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    /*max-width: fit-content;*/
+    /*width: 100%;*/
+    max-width: fit-content;
 
     font-size: 1.15rem;
-    color: aqua;
+    color: white;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
     padding: 0.75rem;
     margin-top: 20px;
-    /*background-color: rgb(33, 33, 33);*/
-    background-color: black;
+    background-color: rgb(33, 33, 33);
+    /*background-color: black;*/
     border-width: 8px;
     border-radius: 5;
     border-style: double;
-    border-color: black;
+    border-color: whitesmoke;
     /*border-color: rgb(255, 22, 185);*/
 }
 
 .theme-toggle:hover {
-    color: #00ff41;
+    /*box-shadow: 0px 0px 40px rgb(255, 76, 201);*/
+    box-shadow: 0px 0px 40px white;
+    /* color: #00ff41;*/
     /*border-color: #088f11;*/
-    box-shadow: 0px 0px 40px #00ff41;
+    /*box-shadow: 0px 0px 40px #00ff41;*/
 }
 
 .theme-toggle-theme-green {
@@ -212,7 +219,6 @@ body {
 
 .theme-toggle-theme-green:hover {
     color: aqua;
-    /*border-color: rgb(255, 22, 185);*/
     box-shadow: 0px 0px 40px rgb(255, 76, 201);
 }
 
@@ -232,7 +238,7 @@ body {
 .square {
     height: 2rem;
     width: 2rem;
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     box-sizing: border-box;
 }
 
@@ -242,38 +248,32 @@ body {
     /* This creates CIRCLES for occupied squares:
     border-radius: 1rem;
     */
-    /* TODO: V2 - green. */
     border-color: rgb(138, 0, 251);
     border-width: 6px;
 }
 
 .square.selected {
     background-color: white;
-    /* TODO: V2 - green. */
-    border-color: rgb(138, 0, 251);
-    /*border-width: 6px;*/
+    border-color: white;
     cursor: not-allowed;
 }
 
-/* TODO 09/07/2022: Add SelectedTwo. */
 .square.selectedTwo {
     background-color: rgb(255, 22, 185);
-    border-color: rgb(138, 0, 251);
+    border-color: white;
     border-width: 6px;
     cursor: not-allowed;
 }
 
 .square.free {
-    /* TODO: V2 - green. */
-    border-color: rgb(138, 0, 251);
-    border-width: 3px;
+    border-color: lightsteelblue;
+    border-width: 5px;
 }
 
 .square.free:hover {
-    /* TODO: V2 - green. */
-    background-color: rgb(255, 22, 185);
-    border-color: rgb(138, 0, 251);
-    border-width: 6px;
+    background-color: rgb(255, 0, 190);
+    border-color: lightsteelblue;
+    border-width: 5px;
 }
 
 .status-text {
@@ -285,7 +285,7 @@ body {
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-align: center;
-    color: white;
+    color: rgb(255, 0, 190);
     height: fit-content;
     margin-bottom: 12px;
 }
