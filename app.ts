@@ -1,12 +1,6 @@
 /*
-TODO:
-* !!! VERTICAL COUNTER
-* !!! DIAGONAL COUNTER
-TODO: centre buttons.
-* Extras: - Improve function for status and score display- make it into one concise function.
-        Take param for eg. status, string, use if ('status=="etc"), display.
-* - Remove "occupied" as not using
-* Bonus: user chooses goal number; "best of", wins prizes? health bar?
+TODO: Vertical & diagonal counter. 
+TODO: remove occupied as not using.
 */
 
 enum STATUS {
@@ -191,7 +185,7 @@ export class GridMap {
                 countHorizontalTwo++
                 if (countHorizontalTwo >= numberColumns-1){
                     console.log('Game Over')
-                    main.statusText.innerText = main.setStatusText('Game Over')  // It's now on the bottom of the page.
+                    main.statusText.innerText = main.setStatusText('Game Over')
                     document.getElementById('main')?.append(main.statusText)
                     main.gameOverWinnerTwo()
                 }
@@ -215,33 +209,11 @@ export class Main {
     statusText: HTMLDivElement
     scoreText: HTMLDivElement
     decorBar: HTMLDivElement
-    // resetButton: HTMLButtonElement // ! back
-    // themeToggle: HTMLButtonElement
 
     constructor() {
         this.boardContainer = document.createElement('div')
         this.boardContainer.id = 'board'
         this.boardContainer.classList.add('board')
-        /* // ! back
-        this.resetButton = document.createElement('button')
-        this.resetButton.classList.add('reset-button')
-        this.resetButton.innerText = 'Reset'
-        this.resetButton.addEventListener('click', () => {
-            console.log('Reset game.')
-            this.resetGame()
-        })
-        */
-       // ! back
-        /*
-        this.themeToggle = document.createElement('button')
-        this.themeToggle.classList.add('theme-toggle')
-        this.themeToggle.innerText = 'Theme'
-        this.themeToggle.addEventListener('click', () => {
-            console.log('Theme switched.')
-            this.themeToggled()
-        })
-        */
-        // ! back
         const resetButton = document.createElement('button')
         resetButton.classList.add('reset-button')
         resetButton.innerText = 'Reset'
@@ -249,7 +221,6 @@ export class Main {
             console.log("Reset game.")
             this.resetGame()
         })
-        
         const themeToggle = document.createElement('div')
         themeToggle.classList.add('theme-toggle')
         themeToggle.innerText = 'Theme'
@@ -268,11 +239,9 @@ export class Main {
         this.scoreText.id = 'score-text'
         this.scoreText.classList.add('score-text')
         this.scoreText.innerText = this.setStatusText('Score: 0, 0')
-        this.boardContainer.appendChild(resetButton) // ! back
+        this.boardContainer.appendChild(resetButton)
         this.boardContainer.appendChild(themeToggle)
         document.getElementById('main')?.append(this.decorBar)
-        // document.getElementById('main')?.append(this.resetButton) // ! back
-        // document.getElementById('main')?.append(this.themeToggle)  // ! back
         document.getElementById('main')?.append(this.boardContainer)
         document.getElementById('main')?.append(this.statusText)
         document.getElementById('main')?.append(this.scoreText)
@@ -323,7 +292,6 @@ export class Main {
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
         playerOneScore++
-        console.log(playerOneScore) // test, delete when done. Incremented.
         this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
@@ -334,7 +302,6 @@ export class Main {
         this.renderGame(numberRows, numberColumns)
         clickCounter = 0
         playerTwoScore++
-        console.log(playerTwoScore)  // test, delete when done
         this.scoreText.innerText = this.setScoreText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         document.getElementById('main')?.append(this.scoreText)
     }
@@ -354,36 +321,18 @@ export class Main {
             // Green theme.
             this.decorBar.classList.remove('decor-bar')
             this.decorBar.classList.add('decor-bar-theme-green')  
-            // ! back
-            /*
-            this.resetButton.classList.remove('reset-button')
-            this.resetButton.classList.add('reset-button-theme-green') 
-            this.themeToggle.classList.remove('theme-toggle')
-            this.themeToggle.classList.add('theme-toggle-theme-green') 
-            */
             this.scoreText.classList.remove('score-text')
             this.scoreText.classList.add('score-text-theme-green')     
             document.getElementById('decor-bar-theme-green')?.append(this.decorBar)   
-            // ! back
-            // document.getElementById('reset-button-theme-green')?.append(this.resetButton)  
-            // document.getElementById('theme-toggle-theme-green')?.append(this.themeToggle)   
             document.getElementById('score-text-theme-green')?.append(this.scoreText)    
         }
         else if (themeClickCounter % 2 == 0) {
             // Purple theme.
             this.decorBar.classList.remove('decor-bar-theme-green') 
             this.decorBar.classList.add('decor-bar')
-            // ! back
-            // this.resetButton.classList.remove('reset-button-theme-green') 
-            // this.resetButton.classList.add('reset-button')
-            // this.themeToggle.classList.remove('theme-toggle-theme-green') 
-            // this.themeToggle.classList.add('theme-toggle')
             this.scoreText.classList.remove('score-text-theme-green') 
             this.scoreText.classList.add('score-text')
             document.getElementById('decor-bar')?.append(this.decorBar)
-            // ! back
-            // document.getElementById('reset-button')?.append(this.resetButton)
-            // document.getElementById('theme-toggle')?.append(this.themeToggle)
             document.getElementById('score-text')?.append(this.scoreText)
         }
     }

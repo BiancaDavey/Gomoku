@@ -66,9 +66,6 @@ body {
 .board {
     display: flex;
     flex-direction: column;
-    /*width: auto; */
-    /*max-width: 1000px;*/
-    /* margin: 0 auto; */
     align-items: center;
 }
 
@@ -93,133 +90,52 @@ body {
 }
 
 .reset-button {
-    /* TODO: not centered. */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     max-width: fit-content;
-
-    /*-ms-transform: translate(-50%, -50%);*/
-    /*transform: translate(50%);*/
-    /*transform: translate(820%); */
-    /* TODO remove once decide style. Try shadow?*/
-    /*text-decoration: underline double rgb(255, 22, 185) 2px;*/
-    /*text-shadow: 2px 2px 4px #000000;*/
-    font-size: 1.15rem;
+    padding: 0.75rem;
+    margin-top: 20px;
+    background-color: rgb(33, 33, 33);
     color: white;
+    font-size: 1.15rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    padding: 0.75rem;
-    margin-top: 20px;
+    border-style: double;
+    border-color: whitesmoke;
     border-width: 8px;
     border-radius: 5;
-    border-style: double;
-    /*background-color: black;*/
-    background-color: rgb(33, 33, 33);
-    /*border-color: black;*/
-    /*border-color: rgb(255, 22, 185);*/
-    border-color: whitesmoke;
 }
 
 .reset-button:hover {
-    /*box-shadow: 0px 0px 40px rgb(255, 76, 201);*/
     box-shadow: 0px 0px 40px white;
-}
-
-.reset-button-theme-green {
-    /* TODO: not centered. */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    /*max-width: fit-content;*/
-
-    font-size: 1.15rem;
-    color: #00ff41;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    padding: 0.75rem;
-    margin-top: 20px;
-    background-color: black;
-    /* background-color: rgb(33, 33, 33); */
-    border-width: 8px;
-    border-radius: 5;
-    border-style: double;
-    border-color: black;
-    /*border-color: #088f11;*/
-}
-
-.reset-button-theme-green:hover {
-    border-color: #088f11;
-    box-shadow: 0px 0px 40px #00ff41;
 }
 
 .theme-toggle {
-    /* TODO: not centered. */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /*width: 100%;*/
     max-width: fit-content;
-
-    font-size: 1.15rem;
-    color: white;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
     padding: 0.75rem;
     margin-top: 20px;
     background-color: rgb(33, 33, 33);
-    /*background-color: black;*/
-    border-width: 8px;
-    border-radius: 5;
-    border-style: double;
-    border-color: whitesmoke;
-    /*border-color: rgb(255, 22, 185);*/
-}
-
-.theme-toggle:hover {
-    /*box-shadow: 0px 0px 40px rgb(255, 76, 201);*/
-    box-shadow: 0px 0px 40px white;
-    /* color: #00ff41;*/
-    /*border-color: #088f11;*/
-    /*box-shadow: 0px 0px 40px #00ff41;*/
-}
-
-.theme-toggle-theme-green {
-    /* TODO: not centered. */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    /*max-width: fit-content;*/
-    
+    color: white;
     font-size: 1.15rem;
-    color: #00ff41;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    padding: 0.75rem;
-    margin-top: 20px;
-    /*background-color: rgb(33, 33, 33);*/
-    background-color: black;
+    border-color: whitesmoke;
     border-width: 8px;
     border-radius: 5;
     border-style: double;
-    border-color: black;
-    /*border-color: #088f11;*/
 }
 
-.theme-toggle-theme-green:hover {
-    color: aqua;
-    box-shadow: 0px 0px 40px rgb(255, 76, 201);
+.theme-toggle:hover {
+    box-shadow: 0px 0px 40px white;
 }
 
 .grid-map {
@@ -245,9 +161,6 @@ body {
 .square.occupied {
     background-color: gold;
     cursor: not-allowed;
-    /* This creates CIRCLES for occupied squares:
-    border-radius: 1rem;
-    */
     border-color: rgb(138, 0, 251);
     border-width: 6px;
 }
@@ -281,13 +194,13 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: fit-content;
+    margin-bottom: 12px;
+    color: rgb(255, 0, 190);
     font-size: 1.5rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-align: center;
-    color: rgb(255, 0, 190);
-    height: fit-content;
-    margin-bottom: 12px;
 }
 
 .score-text {
@@ -295,13 +208,13 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: fit-content;
+    margin-top: 12px;
+    color: aqua;
     font-size: 1.5rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-align: center;
-    color: aqua;
-    height: fit-content;
-    margin-top: 12px;
 }
 
 .score-text-theme-green {
@@ -309,11 +222,11 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    height: fit-content;
+    margin-top: 12px;
+    color: #088f11;
     font-size: 1.5rem;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: bold;
     text-align: center;
-    color: #088f11;
-    height: fit-content;
-    margin-top: 12px;
 }
