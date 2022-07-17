@@ -30,11 +30,11 @@ export class Square {
         return clickCounter
     }
 
-    handleClick() {  // !!!! ORIGINAL
+    handleClick() {
         this.incrementClickCounter()
-        main.gameStatusDisplay() // !!!! ORIGINAL
-        if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return // !!!! ORIGINAL
-        this.element.classList.remove(this.status.toLowerCase()) // !!!! ORIGINAL
+        main.gameStatusDisplay()
+        if (this.status === STATUS.OCCUPIED || this.status === STATUS.SELECTED || this.status === STATUS.SELECTEDTWO) return
+        this.element.classList.remove(this.status.toLowerCase())
         if (clickCounter % 2 != 0){
             this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE
             this.element.classList.add(this.status.toLowerCase())   
@@ -43,8 +43,6 @@ export class Square {
             this.status = this.status === STATUS.FREE ? STATUS.SELECTEDTWO : STATUS.FREE
             this.element.classList.add(this.status.toLowerCase())
         }
-        //this.status = this.status === STATUS.FREE ? STATUS.SELECTED : STATUS.FREE // !!!! ORIGINAL
-        //this.element.classList.add(this.status.toLowerCase()) // !!!! ORIGINAL
     }
 
     get isFree() {
@@ -122,7 +120,7 @@ export class GridMap {
 
     getSelectedTwoSquaresId(){
         this.selectedTwoSquares = this.rows.map(row => row.selectedTwoSquaresId).flat()
-        console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
+        // console.log(`selected two squares: ${this.selectedTwoSquares.join(',')}`)
     }
 
     checkDraw() {
@@ -134,37 +132,56 @@ export class GridMap {
     }
 
     checkFiveInARow() {
-        
-        console.log('checking five in a row. printng selected one:')
-        console.log(this.selectedSquares)
-        console.log('checking five in a row 2, printing selectedTWO: ')
-        console.log(this.selectedTwoSquares)  // YES, it returns it.
-        
         let countHorizontalOne: number = 1
-        let countVerticalOne: number = 1
         let countHorizontalTwo: number = 0
-        let countVerticalTwo: number = 0
-        let numCol: number = 10
-
-        // TODO: fix vertical count.
-        // Check for five in a column vertically.
-        for (var j = 0; j < this.selectedSquares.length-1; j++){
-            if (((this.selectedSquares[j]) + 10) === (this.selectedSquares[numCol])){
-                console.log(numCol)
-                console.log('Vertical match: j and 10')  // Doesn't work.
-                console.log(this.selectedSquares[j])
-                console.log(this.selectedSquares[numCol])
+        let countVerticalOne: number = 1
+        let countVerticalTwo: number = 1
+        let verticalArrayOne: number[] = []
+        let verticalArrayTwo: number[] = []
+        let countDiagonalOneTRBL: number = 1
+        let countDiagonalTwoTRBL: number = 1
+        let diagonalArrayOneTRBL: number[] = []
+        let diagonalArrayTwoTRBL: number[] = []
+        let countDiagonalOneTLBR: number = 1
+        let countDiagonalTwoTLBR: number = 1
+        let diagonalArrayOneTLBR: number[] = []
+        let diagonalArrayTwoTLBR: number[] = []
+        let diagonalCheck: number = numberColumns+1
+        // Check for five in a row vertically for player one.
+        for (var i = 0; i < this.selectedSquares.length; i++){
+            verticalArrayOne.push(this.selectedSquares[i])
+            if (verticalArrayOne.length >= 5){
+                for (var i = 0; i < verticalArrayOne.length; i++) {
+                    if ((verticalArrayOne[i] + numberColumns) === verticalArrayOne[i+1]){
+                        countVerticalOne++
+                        if (countVerticalOne >= 5){
+                            main.gameOver()
+                        }
+                    }
+                }
             }
         }
-
-        // TODO: fix horizontal count for alternating board size. All in same ROW? IT ONLY WORKS FOR 5 RIGHT NOW!!!
-        // Check for five in a row horizontally for selected one.
+        // Check for five in a row vertically for player two.
+        for (var i = 0; i < this.selectedTwoSquares.length; i++){
+            verticalArrayTwo.push(this.selectedTwoSquares[i])
+            if (verticalArrayTwo.length >= 5){
+                for (var i = 0; i < verticalArrayTwo.length; i++) {
+                    if ((verticalArrayTwo[i] + numberColumns) === verticalArrayTwo[i+1]){
+                        countVerticalTwo++
+                        if (countVerticalTwo >= 5){
+                            main.gameOverWinnerTwo()
+                        }
+                    }
+                }
+            }
+        }
+        // Check for five in a row horizontally for player one.
         for (var i = 0; i < this.selectedSquares.length-1; i++){
             if (((this.selectedSquares[i+1]) === ((this.selectedSquares[i]) +1))){
                 countHorizontalOne++
-                if (countHorizontalOne >= numberColumns){
+                if (countHorizontalOne >= 5){
                     console.log('Game Over')
-                    main.statusText.innerText = main.setStatusText('Game Over')  // It's now on the bottom of the page.
+                    main.statusText.innerText = main.setStatusText('Game Over')
                     document.getElementById('main')?.append(main.statusText)
                     main.gameOver()
                 }
@@ -173,12 +190,11 @@ export class GridMap {
                 countHorizontalOne = 1
             }
         }
-
-        // Check for five in a row horizontally for selected two.
+        // Check for five in a row horizontally for player two.
         for (var i = 0; i < this.selectedTwoSquares.length-1; i++){
             if (((this.selectedTwoSquares[i+1]) === ((this.selectedTwoSquares[i]) +1))){
                 countHorizontalTwo++
-                if (countHorizontalTwo >= numberColumns-1){
+                if (countHorizontalTwo >= 5-1){
                     console.log('Game Over')
                     main.statusText.innerText = main.setStatusText('Game Over')
                     document.getElementById('main')?.append(main.statusText)
@@ -187,6 +203,62 @@ export class GridMap {
             }
             else {
                 countHorizontalTwo = 0
+            }
+        }
+        // Check for five in a row diagonally top-left to bottom-right direction for player one.
+        for (var i = 0; i < this.selectedSquares.length; i++){
+            diagonalArrayOneTRBL.push(this.selectedSquares[i])
+            if (diagonalArrayOneTRBL.length >= 5){
+                for (var i = 0; i < diagonalArrayOneTRBL.length-1; i++) {
+                    if ((diagonalArrayOneTRBL[i] + diagonalCheck) === diagonalArrayOneTRBL[i+1]){
+                        countDiagonalOneTRBL++
+                        if (countDiagonalOneTRBL >= 5){
+                            main.gameOver()
+                        }
+                    }
+                }
+            }
+        }
+        // Check for five in a row diagonally top-left to bottom-right direction for player two.
+        for (var i = 0; i < this.selectedTwoSquares.length; i++){
+            diagonalArrayTwoTRBL.push(this.selectedTwoSquares[i])
+            if (diagonalArrayTwoTRBL.length >= 5){
+                for (var i = 0; i < diagonalArrayTwoTRBL.length-1; i++) {
+                    if ((diagonalArrayTwoTRBL[i] + diagonalCheck) === diagonalArrayTwoTRBL[i+1]){
+                        countDiagonalTwoTRBL++
+                        if (countDiagonalTwoTRBL >= 5){
+                            main.gameOverWinnerTwo()
+                        }
+                    }
+                }
+            }
+        }
+        // Check for five in a row diagonally top-right to bottom-left direction for player one.
+        for (var i = 0; i < this.selectedSquares.length; i++){
+            diagonalArrayOneTRBL.push(this.selectedSquares[i])
+            if (diagonalArrayOneTRBL.length >= 5){
+                for (var i = 0; i < diagonalArrayOneTRBL.length-1; i++) {
+                    if ((diagonalArrayOneTRBL[i] + (diagonalCheck-2)) === diagonalArrayOneTRBL[i+1]){
+                        countDiagonalOneTRBL++
+                        if (countDiagonalOneTRBL >= 5){
+                            main.gameOver()
+                        }
+                    }
+                }
+            }
+        }
+        // Check for five in a row diagonally top-right to bottom-left direction for player two.
+        for (var i = 0; i < this.selectedTwoSquares.length; i++){
+            diagonalArrayTwoTRBL.push(this.selectedTwoSquares[i])
+            if (diagonalArrayTwoTRBL.length >= 5){
+                for (var i = 0; i < diagonalArrayTwoTRBL.length-1; i++) {
+                    if ((diagonalArrayTwoTRBL[i] + (diagonalCheck-2)) === diagonalArrayTwoTRBL[i+1]){
+                        countDiagonalTwoTRBL++
+                        if (countDiagonalTwoTRBL >= 5){
+                            main.gameOverWinnerTwo()
+                        }
+                    }
+                }
             }
         }
     }
@@ -235,7 +307,7 @@ export class Main {
         this.scoreText = document.createElement('div')
         this.scoreText.id = 'score-text'
         this.scoreText.classList.add('score-text')
-        this.scoreText.innerText = this.setStatusText('Score: 0, 0')
+        this.scoreText.innerText = this.setStatusText(`Score: Player One: ${playerOneScore}, Player Two: ${playerTwoScore} `)
         this.boardContainer.appendChild(resetButton)
         this.boardContainer.appendChild(themeToggle)
         document.getElementById('main')?.append(this.decorBar)
@@ -260,6 +332,16 @@ export class Main {
         }
         this.gridMap = new GridMap(rowNumber, squareNumberPerRow, occupiedSquares)
         this.boardContainer.append(this.gridMap.element)
+        this.boardSizeCheck()
+    }
+
+    boardSizeCheck() {
+        if (numberColumns < 5 && numberRows < 5){
+            this.statusText.innerText = this.setStatusText('Please configure game board to have minimum 5 rows or 5 columns.')
+            document.getElementById('main')?.append(this.statusText)
+            this.scoreText.innerText = this.setScoreText("")
+            document.getElementById('main')?.append(this.scoreText)
+        }
     }
 
     gameStatusDisplay() {
@@ -316,6 +398,7 @@ export class Main {
         themeClickCounter++
         if (themeClickCounter % 2 != 0){
             // Green theme.
+            // TODO: check this function.
             this.decorBar.classList.remove('decor-bar')
             this.decorBar.classList.add('decor-bar-theme-green')  
             this.scoreText.classList.remove('score-text')
@@ -339,6 +422,6 @@ export class Main {
 // Initialise app with main object.
 const main = new Main()
 // Number of rows and columns can be configured here.
-let numberColumns: number = 4;
-let numberRows: number = 4;
+let numberColumns: number = 8;
+let numberRows: number = 8;
 main.renderGame(numberRows, numberColumns)
