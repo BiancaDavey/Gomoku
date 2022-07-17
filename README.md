@@ -35,10 +35,10 @@ Gomoku is a program creating a Gomoku game for the user to play. The program pro
 * Set number of rows and number of columns.
 [![Set-number-Rows-number-Columns.png](https://i.postimg.cc/YCZxKp8N/Set-number-Rows-number-Columns.png)](https://postimg.cc/mP397Wvh)
 
-* Example of game board with purple theme.
+* Example of game board with purple "Retrowave" theme.
 [![Example-Gomoku-01.png](https://i.postimg.cc/28wzKykJ/Example-Gomoku-01.png)](https://postimg.cc/SJnFXyz7)
 
-* Example of game board with green theme and player one with score 1.
+* Example of game board with green "Matrix" theme and player one with score 1.
 [![Example-Gomoku-02.png](https://i.postimg.cc/Zqyz45mJ/Example-Gomoku-02.png)](https://postimg.cc/CZYQ4Yd2)
 
 ## Author
