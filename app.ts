@@ -37,13 +37,13 @@ export class Square {
         this.element.classList.add(this.status.toLowerCase())
         //  EventListener for clicks on squares.
         this.element.addEventListener('click', () => {
-            //  Call handleClick method.
+            //  Call handleClick.
             this.handleClick()
         })
     }
 
     /*
-        The incrementClickCounter method increments and returns the clickCounter.
+        incrementClickCounter increments and returns the clickCounter.
     */
     incrementClickCounter() {
         clickCounter = clickCounter+1
@@ -51,7 +51,7 @@ export class Square {
     }
 
     /*
-        The handleClick method sets the status of the square clicked on as being selected by player one or by player two.
+        handleClick sets the status of the square clicked on as being selected by player one or by player two.
     */
     handleClick() {
         this.incrementClickCounter()
@@ -71,28 +71,28 @@ export class Square {
     }
 
     /*
-        The isFree method returns the status as being FREE.
+        isFree returns the status as being FREE.
     */
     get isFree() {
         return this.status === STATUS.FREE
     }
 
     /*
-        The isSelected method returns the status as being SELECTED.
+        isSelected returns the status as being SELECTED.
     */
     get isSelected() {
         return this.status === STATUS.SELECTED
     }
 
     /*
-        The isSelectedTwo method returns the status as being SELECTEDTWO.
+        isSelectedTwo returns the status as being SELECTEDTWO.
     */
     get isSelectedTwo(){
         return this.status === STATUS.SELECTEDTWO
     }
 
     /*
-        The isOccupied method returns the status as being OCCUPIED.
+        isOccupied returns the status as being OCCUPIED.
     */
     get isOccupied() {
         return this.status === STATUS.OCCUPIED
@@ -165,18 +165,18 @@ export class GridMap {
     }
 
     /*
-        The checkDraw method checks for a draw result indicated by the number of squares with status free being zero.
+        checkDraw checks for a draw result indicated by the number of squares with status free being zero.
     */
     checkDraw() {
         this.freeSquares = this.rows.map(row => row.freeSquaresId).flat()
         if (this.freeSquares.length === 0){
-            //  Call gameOverDraw method.
+            //  Call gameOverDraw.
             main.gameOverDraw()
         }
     }
 
     /*
-        The checkFiveInARow method checks for five squares having been selected in a row horizontally, vertically or diagonally by player one or player two.
+        checkFiveInARow checks for five squares having been selected in a row horizontally, vertically or diagonally by player one or player two.
     */
     checkFiveInARow() {
         let countHorizontalOne: number = 1
@@ -356,7 +356,7 @@ export class Main {
     }
 
     /*
-        The setStatusText method takes and returns a String for the status text.
+        setStatusText takes and returns a String for the status text.
     */
     setStatusText(statusUpdateText: string) {
         this.boardContainer.appendChild(this.statusText)
@@ -364,7 +364,7 @@ export class Main {
     }
 
     /*
-        The setScoreText method takes and returns a String for the score text.
+        setScoreText takes and returns a String for the score text.
     */
     setScoreText(scoreUpdateText: string) {
         this.boardContainer.appendChild(this.scoreText)
@@ -372,7 +372,7 @@ export class Main {
     }
 
     /*
-        The renderGame method takes parameters being number of rows, number of squares per row, and an optional parameter of occupied squares to render a new GridMap.
+        renderGame takes parameters being number of rows, number of squares per row, and an optional parameter of occupied squares to render a new GridMap.
     */
     renderGame(rowNumber: number, squareNumberPerRow: number, occupiedSquares?: number[]) {
         if (this.gridMap){
@@ -380,12 +380,12 @@ export class Main {
         }
         this.gridMap = new GridMap(rowNumber, squareNumberPerRow, occupiedSquares)
         this.boardContainer.append(this.gridMap.element)
-        //  Call boardSizeCheck method to check number of rows and columns reaches the minimum required.
+        //  Call boardSizeCheck to check number of rows and columns reaches the minimum required.
         this.boardSizeCheck()
     }
 
     /*
-        The boardSizeCheck method displays a message to the user to configure the game to have minimum 5 numberRows or numberColumns, in order to facilitate the game rules as being 5 squares in a row to win.
+        boardSizeCheck displays a message to the user to configure the game to have minimum 5 numberRows or numberColumns, in order to facilitate the game rules as being 5 squares in a row to win.
     */
     boardSizeCheck() {
         if (numberColumns < 5 && numberRows < 5){
@@ -398,7 +398,7 @@ export class Main {
     }
 
     /*
-        The gameStatusDisplay method displays the status being which player's turn it is and the score of player one and player two.
+        gameStatusDisplay displays the status being which player's turn it is and the score of player one and player two.
     */
     gameStatusDisplay() {
         //  If clickCounter is odd, display status as being player two's turn.
@@ -415,7 +415,7 @@ export class Main {
     }
 
     /*
-        The resetGame method displays a game reset status and renders a new game.
+        resetGame displays a game reset status and renders a new game.
     */
     resetGame(){
         this.statusText.innerText = this.setStatusText('Game Reset. Click to start a new game: Player One Turn')
@@ -428,7 +428,7 @@ export class Main {
     }
 
     /*
-        The gameOver method ends the game, displays the status being player one won and renders a new game.
+        gameOver ends the game, displays the status being player one won and renders a new game.
     */
     gameOver(){
         this.statusText.innerText = this.setStatusText('Game Over! Player One Won')
@@ -442,7 +442,7 @@ export class Main {
     }
 
     /*
-        The gameOverWinnerTwo method ends the game, displays the status being player two won and renders a new game.
+        gameOverWinnerTwo ends the game, displays the status being player two won and renders a new game.
     */
     gameOverWinnerTwo(){
         this.statusText.innerText = this.setStatusText('Game Over! Player Two Won')
@@ -456,7 +456,7 @@ export class Main {
     }
 
     /*
-        The gameOverDraw method ends the game, displays the status being a draw and renders a new game.
+        gameOverDraw ends the game, displays the status being a draw and renders a new game.
     */
     gameOverDraw(){
         this.statusText.innerText = this.setStatusText('Game Over! Draw')
@@ -469,7 +469,7 @@ export class Main {
     }
 
     /*
-        The themeToggled method switches the theme of the decorBar and scoreText between purple and green upon the user clicking the themeButton.
+        themeToggled switches the theme of the decorBar and scoreText between purple and green upon the user clicking the themeButton.
     */
     themeToggled() {
         themeClickCounter++
@@ -497,8 +497,8 @@ export class Main {
 
 //  Initialise app with main object.
 const main = new Main()
-//  Configure the number of columns and number of rows.
+//  Configure the number of columns and number of rows for the game.
 let numberColumns: number = 6;
 let numberRows: number = 6;
-//  Call renderGame method to render the game.
+//  Call renderGame to render the game.
 main.renderGame(numberRows, numberColumns)
